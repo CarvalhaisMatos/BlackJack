@@ -1,11 +1,11 @@
-#encoding: utf8
+# encoding: utf8
 __author__ = 'Diogo Gomes'
 __email__ = 'dgomes@ua.pt'
 __license__ = "GPL"
 __version__ = "0.1"
 
-
 import random
+
 
 class Card(object):
     suit_names = ["♠️", "♣️", "♦️", "♥️"]
@@ -29,19 +29,21 @@ class Card(object):
         if self.rank == 1:
             return True
         return False
+
     def is_ten(self):
         if self.rank >= 10:
             return True
         return False
 
+
 class Shoe(object):
-    #Represents one or more decks of cards use to
-    #take cards for players and dealer
+    # Represents one or more decks of cards use to
+    # take cards for players and dealer
 
     def __init__(self, number_decks=1):
         self.cards = []
         for i in range(number_decks):
-            self.cards += [Card(suit, rank) for suit in range(4) for rank in range(1,14)]
+            self.cards += [Card(suit, rank) for suit in range(4) for rank in range(1, 14)]
 
     def __str__(self):
         res = []
@@ -74,11 +76,14 @@ class Shoe(object):
             deal.append(self.pop_card())
         return deal
 
-def value(hand):    #TODO as deve valer 1 ou 11 conforme der mais jeito!
-    v = sum([c.value() for c in hand]) 
-    if len([c for c in hand if c.is_ace()]) > 0 and v <= 11: #if there is an Ace and we don't bust by take the Ace as an eleven
-        return v+10 
+
+def value(hand):  # TODO as deve valer 1 ou 11 conforme der mais jeito!
+    v = sum([c.value() for c in hand])
+    if len([c for c in hand if
+            c.is_ace()]) > 0 and v <= 11:  # if there is an Ace and we don't bust by take the Ace as an eleven
+        return v + 10
     return v
+
 
 def blackjack(hand):
     if len(hand) == 2 and hand[0].is_ace() and hand[1].is_ten():
@@ -86,10 +91,10 @@ def blackjack(hand):
     if len(hand) == 2 and hand[1].is_ace() and hand[0].is_ten():
         return True
     return False
-    
+
+
 if __name__ == '__main__':
     shoe = Shoe()
     shoe.shuffle()
 
     print shoe.deal_cards(2)
-

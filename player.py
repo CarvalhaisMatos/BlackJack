@@ -1,18 +1,19 @@
-#encoding: utf8
+# encoding: utf8
 __author__ = 'Diogo Gomes'
 __email__ = 'dgomes@ua.pt'
 __license__ = "GPL"
 __version__ = "0.1"
 import card
 
+
 class Player(object):
     def __init__(self, name="Player", money=0):
         self.name = name
-        self.pocket = money #dont mess with pocket!
+        self.pocket = money  # dont mess with pocket!
         self.table = 0
 
     def __str__(self):
-        return "{} ({}€)".format(self.name, self.pocket-self.table)
+        return "{} ({}€)".format(self.name, self.pocket - self.table)
 
     def __repr__(self):
         return self.__str__()
@@ -24,7 +25,7 @@ class Player(object):
         self.table = 0
         self.pocket += prize
 
-# re-implement all the next methods
+    # re-implement all the next methods
     def debug_state(self, dealer, players):
         print "{:10s}: {:32s} = {}".format("Dealer", dealer.hand, card.value(dealer.hand))
         for p in players:
