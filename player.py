@@ -6,10 +6,12 @@ __version__ = "0.1"
 import card
 
 class Player(object):
-    def __init__(self, name="Player", money=0):
+    def __init__(self, name="Player", money=0, pocket=None, table=0):
         self.name = name
         self.pocket = money #dont mess with pocket!
-        self.table = 0
+        if pocket != None:
+            self.pocket = pocket
+        self.table = table 
 
     def __str__(self):
         return "{} ({}€)".format(self.name, self.pocket-self.table)
@@ -19,12 +21,12 @@ class Player(object):
 
 # MIGHT want to re-implement the next methods
     def show(self, players): #will receive a list containing all the players in the table and respective hands. this method is called before payback and represents the end state
-        #example: print "SHOW:", {p.player.name: p.hand for p in players}
+#        print "SHOW:", {p.player.name: p.hand for p in players}
         pass
 
     def want_to_play(self, rules):     #if you have to much money and jut want to watch, return False
                                         # rules contains a Game.Rules object with information on the game rules (min_bet, max_bet, shoe_size, etc)
-        print rules
+#        print rules
         return True
 
     def payback(self, prize):
@@ -61,6 +63,7 @@ class Player(object):
             bet (int value)
         """
         self.debug_state(dealer, players)
+        print self
         try:
             bet = int(raw_input("bet: "))
         except Exception, e:

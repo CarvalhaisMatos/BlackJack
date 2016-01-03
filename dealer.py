@@ -4,12 +4,13 @@ __email__ = 'dgomes@ua.pt'
 __license__ = "GPL"
 __version__ = "0.1"
 import card
+import copy
 from player import Player
 
 class Dealer(Player):
-    def __init__(self):
-        self.hand = []
-        self.name = "Dealer"
+    def __init__(self, hand=[], name="Dealer"):
+        self.hand = copy.deepcopy(hand) 
+        self.name = name 
     def __str__(self):
         return self.name
 

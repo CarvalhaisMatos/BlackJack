@@ -3,7 +3,6 @@ __author__ = 'Diogo Gomes'
 __email__ = 'dgomes@ua.pt'
 __license__ = "GPL"
 __version__ = "0.1"
-
 import copy
 import card
 from shoe import Shoe
@@ -14,21 +13,23 @@ BET_MULTIPLIER = 2
 
 class Game(object):
     class Rules():
-        def __init__(self, shoe_size=4, min_bet=1, max_bet=10):
+        def __init__(self, shoe_size=4, min_bet=1, max_bet=10, bet_multiplier=BET_MULTIPLIER):
             self.shoe_size = shoe_size
             self.min_bet = min_bet
             self.max_bet = max_bet
-            self.bet_multiplier = BET_MULTIPLIER
+            self.bet_multiplier = bet_multiplier 
+        #def __repr__(self):
+        #    return json.dumps((self.shoe_size, self.min_bet, self.max_bet, self.bet_multiplier))
         def __str__(self):
             return "RULES\tMin bet: {}, Max bet: {}, Shoe size: {}, Bet multiplier: {}".format(self.min_bet, self.max_bet, self.shoe_size, self.bet_multiplier)
     class PlayerState():
-        def __init__(self, p):
-            self.player = p
-            self.bet = 0
-            self.hand = []
-            self.bust = False
-            self.done = False
-            self.watch = False
+        def __init__(self, player, bet=0, hand=[], bust=False, done=False, watch=False):
+            self.player = player
+            self.bet = bet 
+            self.hand = copy.deepcopy(hand)
+            self.bust = bust 
+            self.done = done 
+            self.watch = watch 
         def copy(self):
             return copy.deepcopy(self)
         def __str__(self):
@@ -110,7 +111,7 @@ class Game(object):
         for p in self.state[1:]:
             if not p.watch:
                 p.hand += self.shoe.deal_cards(2)
-
+        
         turn = 0
         if card.blackjack(self.state[0].hand):  #if the dealer has blackjack there is no point in playing...
             self.done = True
